@@ -1,0 +1,44 @@
+Building DashX Daemon
+
+Install all required dependencies:
+
+apt-get update && apt-get upgrade
+apt-get install nano ntp unzip git build-essential libssl-dev libdb-dev libdb++-dev libboost-all-dev libqrencode-dev aptitude && aptitude install miniupnpc libminiupnpc-dev
+
+Pull the source code from github, or upload it yourself:
+
+git clone DashX
+
+If your coin uses leveldb, compile leveldb:
+
+cd /YOURCOIN/src/leveldb
+chmod +x build_detect_platform
+make clean
+make libleveldb.a libmemenv.a
+
+Return to source directory, and compile the daemon:
+
+cd /YOURCOIN/src
+make -f makefile.unix
+
+Strip the file to make it smaller, then relocate it:
+
+strip YOURCOINd
+cp YOURCOINd /usr/bin
+
+Now run the daemon:
+
+YOURCOINd
+
+It will return an error, telling you to set up config file in a directory. Now we’ll set up the config file. Note that this is case sensitive.
+
+nano ~/.YOURCOIN/YOURCOIN.conf
+
+Add the following, save and exit:
+
+daemon=1
+server=1
+rpcuser=(username)
+rpcpassword=(strong password)
+
+Run YOURCOINd once more and if you did everything correctly, your daemon is now online! Type YOURCOINd help for a full list of commands available. 
